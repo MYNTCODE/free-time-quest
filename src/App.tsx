@@ -1,11 +1,29 @@
-import { useEffect, useMemo, useState } from "react";
-import { ActivityCard } from "./components/ActivityCard";
-import { AppHeader } from "./components/AppHeader";
-import { HistoryList } from "./components/HistoryList";
-import { QuestForm } from "./components/QuestForm";
-import { activities, timeOptions } from "./data/activities";
-import { loadHistory, loadTheme, saveHistory, saveTheme } from "./utils/storage";
-import type { Activity, CompletedActivity, QuestCriteria, Theme } from "./types";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+
+import { ActivityCard } from './components/ActivityCard';
+import { AppHeader } from './components/AppHeader';
+import { HistoryList } from './components/HistoryList';
+import { QuestForm } from './components/QuestForm';
+import {
+  activities,
+  timeOptions,
+} from './data/activities';
+import type {
+  Activity,
+  CompletedActivity,
+  QuestCriteria,
+  Theme,
+} from './types';
+import {
+  loadHistory,
+  loadTheme,
+  saveHistory,
+  saveTheme,
+} from './utils/storage';
 
 const defaultCriteria: QuestCriteria = {
   time: "standard",
@@ -108,6 +126,8 @@ export default function App() {
             <HistoryList history={history} onClear={clearHistory} />
           </aside>
         </main>
+
+        <footer className="appFooter">Created by MYNTP</footer>
       </div>
     </div>
   );
