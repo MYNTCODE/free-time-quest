@@ -27,15 +27,17 @@ function getOptionLabel(label: string) {
 
 export function OptionGroup<TValue extends string>({ label, tone, value, options, onChange }: OptionGroupProps<TValue>) {
   const toneClassName = `filterCard${tone[0].toUpperCase()}${tone.slice(1)}`;
+  const moodClassName = tone === "intention" ? " filterCardMood" : "";
+  const optionGridClassName = `optionGrid${tone === "intention" ? " optionGridMood" : ""}`;
 
   return (
-    <section className={`filterCard ${toneClassName}`} aria-labelledby={`${tone}-filter-title`}>
+    <section className={`filterCard ${toneClassName}${moodClassName}`} aria-labelledby={`${tone}-filter-title`}>
       <div className="filterHeader">
         <h3 id={`${tone}-filter-title`}>{label}</h3>
         <span className="filterAccent" aria-hidden="true" />
       </div>
 
-      <div className="optionGrid">
+      <div className={optionGridClassName}>
         {options.map((option) => {
           const isSelected = option.value === value;
           const isLongLabel = option.label.length > 12;
