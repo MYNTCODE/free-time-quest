@@ -15,13 +15,16 @@ import {
 import type {
   Activity,
   CompletedActivity,
+  Language,
   QuestCriteria,
   Theme,
 } from './types';
 import {
   loadHistory,
+  loadLanguage,
   loadTheme,
   saveHistory,
+  saveLanguage,
   saveTheme,
 } from './utils/storage';
 
@@ -30,6 +33,23 @@ const defaultCriteria: QuestCriteria = {
   energy: "medium",
   intention: "focus",
 };
+
+const copy = {
+  th: {
+    currentMatch: "กิจกรรมที่ตรงเงื่อนไข",
+    pool: "ตัวเลือกทั้งหมด",
+    activities: "กิจกรรม",
+    completed: "ทำแล้ว",
+    completedUnit: "รายการ",
+  },
+  en: {
+    currentMatch: "Current match",
+    pool: "Pool",
+    activities: "activities",
+    completed: "Completed",
+    completedUnit: "completed",
+  },
+} satisfies Record<Language, Record<string, string>>;
 
 function getActivityPool(criteria: QuestCriteria): Activity[] {
   const selectedTime = timeOptions.find((option) => option.value === criteria.time);
@@ -59,16 +79,23 @@ function pickRandomActivity(criteria: QuestCriteria): Activity {
 
 export default function App() {
   const [theme, setTheme] = useState<Theme>(loadTheme);
+  const [language, setLanguage] = useState<Language>(loadLanguage);
   const [criteria, setCriteria] = useState<QuestCriteria>(defaultCriteria);
   const [activity, setActivity] = useState<Activity>(() => pickRandomActivity(defaultCriteria));
   const [history, setHistory] = useState<CompletedActivity[]>(loadHistory);
 
   const matchingCount = useMemo(() => getActivityPool(criteria).length, [criteria]);
+  const text = copy[language];
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     saveTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    saveLanguage(language);
+  }, [language]);
 
   useEffect(() => {
     saveHistory(history);
@@ -98,32 +125,46 @@ export default function App() {
     setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
   }
 
+  function toggleLanguage() {
+    setLanguage((currentLanguage) => (currentLanguage === "en" ? "th" : "en"));
+  }
+
   return (
     <div className="page">
       <div className="appFrame">
-        <AppHeader theme={theme} completedCount={history.length} onToggleTheme={toggleTheme} />
+        <AppHeader
+          theme={theme}
+          language={language}
+          completedCount={history.length}
+          onToggleLanguage={toggleLanguage}
+          onToggleTheme={toggleTheme}
+        />
 
         <main className="layout">
           <div className="primary-column">
-            <QuestForm criteria={criteria} onChange={setCriteria} onGenerate={generateQuest} />
-            <ActivityCard activity={activity} onComplete={completeActivity} />
+            <QuestForm language={language} criteria={criteria} onChange={setCriteria} onGenerate={generateQuest} />
+            <ActivityCard language={language} activity={activity} onComplete={completeActivity} />
           </div>
 
           <aside className="side-column">
             <section className="panel statCard">
-              <h2>Current match</h2>
+              <h2>{text.currentMatch}</h2>
               <dl>
                 <div>
-                  <dt>Pool</dt>
-                  <dd>{matchingCount || activities.length} activities</dd>
+                  <dt>{text.pool}</dt>
+                  <dd>
+                    {matchingCount || activities.length} {text.activities}
+                  </dd>
                 </div>
                 <div>
-                  <dt>Completed</dt>
-                  <dd>{history.length} completed</dd>
+                  <dt>{text.completed}</dt>
+                  <dd>
+                    {history.length} {text.completedUnit}
+                  </dd>
                 </div>
               </dl>
             </section>
-            <HistoryList history={history} onClear={clearHistory} />
+            <HistoryList language={language} history={history} onClear={clearHistory} />
           </aside>
         </main>
 

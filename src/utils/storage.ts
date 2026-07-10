@@ -1,7 +1,8 @@
-import type { CompletedActivity, Theme } from "../types";
+import type { CompletedActivity, Language, Theme } from "../types";
 
 const historyKey = "free-time-quest:history";
 const themeKey = "free-time-quest:theme";
+const languageKey = "free-time-quest:language";
 
 export function loadTheme(): Theme {
   const savedTheme = localStorage.getItem(themeKey);
@@ -15,6 +16,20 @@ export function loadTheme(): Theme {
 
 export function saveTheme(theme: Theme): void {
   localStorage.setItem(themeKey, theme);
+}
+
+export function loadLanguage(): Language {
+  const savedLanguage = localStorage.getItem(languageKey);
+
+  if (savedLanguage === "th" || savedLanguage === "en") {
+    return savedLanguage;
+  }
+
+  return "en";
+}
+
+export function saveLanguage(language: Language): void {
+  localStorage.setItem(languageKey, language);
 }
 
 export function loadHistory(): CompletedActivity[] {
