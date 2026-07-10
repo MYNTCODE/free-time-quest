@@ -566,7 +566,8 @@ p {
 }
 
 .resultCard h2 {
-  padding-top: 12px;
+  padding-top: 10px;
+  padding-left: 10px;
   margin-bottom: 0;
   color: var(--result-text);
   font-size: clamp(26px, 3.5vw, 32px);
@@ -574,6 +575,7 @@ p {
 }
 
 .resultCard p {
+  padding: 10px;
   max-width: 720px;
   margin-bottom: 0;
   color: var(--result-muted);
@@ -581,11 +583,15 @@ p {
 }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
-  padding: 5px 9px;
+  min-height: 40px;
+  padding: 9px 15px;
   color: var(--badge-text);
   background: var(--badge-bg);
-  border: 1px solid var(--badge-border);
+  border: 2px solid var(--badge-border);
   border-radius: var(--radius-sm);
   font-size: 18px;
   font-weight: 800;
@@ -600,11 +606,13 @@ p {
 
 .steps h3 {
   color: var(--steps-title);
+  padding-left: 10px;
 }
 
 .steps ol {
   margin: 0;
-  padding-left: 22px;
+  padding-left: 30px;
+  padding-bottom: var(--space-2);
 }
 
 .steps li + li {
