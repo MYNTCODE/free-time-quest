@@ -571,7 +571,7 @@ p {
   margin-bottom: 0;
   color: var(--result-text);
   font-size: clamp(26px, 3.5vw, 32px);
-  line-height: 1.08;
+  line-height: 1.35;
 }
 
 .resultCard p {
