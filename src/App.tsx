@@ -6,6 +6,7 @@ import {
 
 import { ActivityCard } from './components/ActivityCard';
 import { AppHeader } from './components/AppHeader';
+import { CustomCursor } from './components/CustomCursor';
 import { HistoryList } from './components/HistoryList';
 import { QuestForm } from './components/QuestForm';
 import {
@@ -131,6 +132,7 @@ export default function App() {
 
   return (
     <div className="page">
+      <CustomCursor />
       <div className="appFrame">
         <AppHeader
           theme={theme}
