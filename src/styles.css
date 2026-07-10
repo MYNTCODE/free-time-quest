@@ -56,6 +56,7 @@
 
   --primary: #d8ff3e;
   --primary-hover: #c8f02f;
+  --primary-button-text: #111827;
   --primary-soft: #2b3a1f;
 
   --card-time: #69b4ff;
@@ -117,6 +118,7 @@
 
   --primary: #4faf8b;
   --primary-hover: #3f9677;
+  --primary-button-text: #ffffff;
   --primary-soft: #d9f2e9;
 
   --card-time: #bfe0fb;
@@ -397,6 +399,7 @@ p {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   text-wrap: balance;
 }
 
@@ -437,7 +440,7 @@ p {
 }
 
 .primaryButton {
-  color: var(--text-on-color);
+  color: var(--primary-button-text);
   background: var(--primary);
   border-color: var(--primary);
 }
