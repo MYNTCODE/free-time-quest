@@ -1,47 +1,76 @@
-import { energyOptions, intentionOptions, timeOptions } from "../data/activities";
-import type { QuestCriteria } from "../types";
-import { OptionGroup } from "./OptionGroup";
+import {
+  energyOptions,
+  intentionOptions,
+  timeOptions,
+} from '../data/activities';
+import type {
+  Language,
+  QuestCriteria,
+} from '../types';
+import { OptionGroup } from './OptionGroup';
 
 type QuestFormProps = {
+  language: Language;
   criteria: QuestCriteria;
   onChange: (criteria: QuestCriteria) => void;
   onGenerate: () => void;
 };
 
-export function QuestForm({ criteria, onChange, onGenerate }: QuestFormProps) {
+const copy = {
+  th: {
+    title: "เลือกข้อจำกัด",
+    description: "ให้ใกล้กับสิ่งที่ทำได้จริงในตอนนี้",
+    time: "เวลาที่มี",
+    energy: "พลังงาน",
+    intention: "อารมณ์หรือความตั้งใจ",
+    generate: "สุ่มเควสต์",
+  },
+  en: {
+    title: "Choose your constraints",
+    description: "Keep it close to what you can actually do right now.",
+    time: "Available time",
+    energy: "Energy level",
+    intention: "Mood or intention",
+    generate: "Generate quest",
+  },
+} satisfies Record<Language, Record<string, string>>;
+
+export function QuestForm({ language, criteria, onChange, onGenerate }: QuestFormProps) {
+  const text = copy[language];
+
   return (
     <section className="controlsPanel" aria-labelledby="quest-controls">
       <div className="controlsHeader">
-        <h2 id="quest-controls">Choose your constraints</h2>
-        <p>Keep it close to what you can actually do right now.</p>
+        <h2 id="quest-controls">{text.title}</h2>
+        <p>{text.description}</p>
       </div>
 
       <div className="form-grid">
         <OptionGroup
-          label="Available time"
+          label={text.time}
           tone="time"
           value={criteria.time}
-          options={timeOptions}
+          options={timeOptions.map((option) => ({ ...option, label: option.label[language] }))}
           onChange={(time) => onChange({ ...criteria, time })}
         />
         <OptionGroup
-          label="Energy level"
+          label={text.energy}
           tone="energy"
           value={criteria.energy}
-          options={energyOptions}
+          options={energyOptions.map((option) => ({ ...option, label: option.label[language] }))}
           onChange={(energy) => onChange({ ...criteria, energy })}
         />
         <OptionGroup
-          label="Mood or intention"
+          label={text.intention}
           tone="intention"
           value={criteria.intention}
-          options={intentionOptions}
+          options={intentionOptions.map((option) => ({ ...option, label: option.label[language] }))}
           onChange={(intention) => onChange({ ...criteria, intention })}
         />
       </div>
 
       <button className="primaryButton full-width" type="button" onClick={onGenerate}>
-        Generate quest
+        {text.generate}
       </button>
     </section>
   );

@@ -1,5 +1,7 @@
 export type Theme = "light" | "dark";
 
+export type Language = "th" | "en";
+
 export type TimeOption = "quick" | "standard" | "deep";
 
 export type EnergyLevel = "low" | "medium" | "high";
@@ -14,12 +16,12 @@ export type QuestCriteria = {
 
 export type Activity = {
   id: string;
-  title: string;
   minutes: number;
   energy: EnergyLevel[];
   intentions: Intention[];
-  summary: string;
-  steps: string[];
+  title: Record<Language, string>;
+  summary: Record<Language, string>;
+  steps: Record<Language, string[]>;
 };
 
 export type CompletedActivity = {
