@@ -17,3 +17,11 @@ export function getActivitySummary(activity: Activity | LegacyActivity, language
 export function getActivitySteps(activity: Activity | LegacyActivity, language: Language): string[] {
   return Array.isArray(activity.steps) ? activity.steps : activity.steps[language];
 }
+
+export function getNumberLocale(language: Language): string {
+  return language === "th" ? "th-TH-u-nu-latn" : "en-US";
+}
+
+export function formatNumber(value: number, language: Language): string {
+  return new Intl.NumberFormat(getNumberLocale(language)).format(value);
+}
