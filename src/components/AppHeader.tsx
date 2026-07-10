@@ -2,6 +2,7 @@ import type {
   Language,
   Theme,
 } from '../types';
+import { formatNumber } from '../utils/localize';
 
 type AppHeaderProps = {
   theme: Theme;
@@ -47,7 +48,7 @@ export function AppHeader({ theme, language, completedCount, onToggleLanguage, o
 
       <div className="header-actions">
         <span className="badge">
-          {completedCount} {text.completed}
+          {formatNumber(completedCount, language)} {text.completed}
         </span>
         <button className="button button-secondary" type="button" onClick={onToggleLanguage}>
           {text.language}
